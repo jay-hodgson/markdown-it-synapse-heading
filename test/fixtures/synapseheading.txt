@@ -1,0 +1,46 @@
+.
+s
+.
+<p>s</p>
+.
+
+.
+some ->centered text<- in a paragraph
+.
+<p>some <div style="text-align: center;">centered text</div> in a paragraph</p>
+.
+
+.
+bold and ->**centered text**<- in a paragraph
+.
+<p>bold and <div style="text-align: center;"><strong>centered text</strong></div> in a paragraph</p>
+.
+
+.
+bold and **->centered text<-** in a paragraph
+.
+<p>bold and <strong><div style="text-align: center;">centered text</div></strong> in a paragraph</p>
+.
+
+
+.
+clearly not a ->centered text definition
+.
+<p>clearly not a -&gt;centered text definition</p>
+.
+
+.
+more text that is not centered<-
+.
+<p>more text that is not centered&lt;-</p>
+.
+
+coverage
+.
+*~f
+.
+<p>*~f</p>
+.
+
+clean up init (constructor)
+remove icon
