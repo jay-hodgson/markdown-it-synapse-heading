@@ -12,6 +12,7 @@ __v1.+ requires `markdown-it` v5.+, see changelog.__
 
 `#Heading 1` => `<h1 toc="true">Heading 1</h1>`
 
+###toc attribute not added if #'s are followed by '!'
 `#! Heading 1` => `<h1>Heading 1</h1>`
 
 ## Install
