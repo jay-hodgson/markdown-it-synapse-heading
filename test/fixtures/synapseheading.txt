@@ -33,7 +33,6 @@ a ### in a line does not indicate that it's a heading
 .
 _text above_
 ####Heading 4
-
 .
 <p><em>text above</em></p>
 <h4 toc="true">Heading 4</h4>

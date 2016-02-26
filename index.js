@@ -14,14 +14,13 @@ module.exports = function synapse_heading_plugin(md) {
   }
 
   function synapse_heading(state, startLine, endLine, silent) {
-    var token,
-        level,
-        tmp,
+    var ch, level, tmp, token,
         pos = state.bMarks[startLine] + state.tShift[startLine],
-        max = state.eMarks[startLine],
-        ch = state.src.charCodeAt(pos);
-    if (silent) { return true; }
-    if (ch !== 0x23/* # */) { return false; }
+        max = state.eMarks[startLine];
+
+    ch  = state.src.charCodeAt(pos);
+
+    if (ch !== 0x23/* # */ || pos >= max) { return false; }
 
     // count heading level
     level = 1;
@@ -30,9 +29,13 @@ module.exports = function synapse_heading_plugin(md) {
       level++;
       ch = state.src.charCodeAt(++pos);
     }
+
     if (level > 6) { return false; }
 
+    if (silent) { return true; }
+
     // Let's cut tails like '    ###  ' from the end of string
+
     max = state.skipSpacesBack(max, pos);
     tmp = state.skipCharsBack(max, 0x23, pos); // #
     if (tmp > pos && isSpace(state.src.charCodeAt(tmp - 1))) {
@@ -51,7 +54,6 @@ module.exports = function synapse_heading_plugin(md) {
       pos++;
     }
 
-
     token          = state.push('inline', '', 0);
     token.content  = state.src.slice(pos, max).trim();
     token.map      = [ startLine, state.line ];
@@ -62,6 +64,6 @@ module.exports = function synapse_heading_plugin(md) {
 
     return true;
   }
-
-  md.block.ruler.before('reference', 'synapse_heading', synapse_heading);
+  var rulesCanBeTerminated = [ 'paragraph', 'reference', 'blockquote' ];
+  md.block.ruler.after('fence', 'synapse_heading', synapse_heading, { alt: (rulesCanBeTerminated).slice() });
 };

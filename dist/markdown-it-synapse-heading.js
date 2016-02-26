@@ -1,4 +1,4 @@
-/*! markdown-it-synapse-heading 1.0.0 https://github.com/jay-hodgson/markdown-it-synapse-heading @license MIT */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.markdownitSynapseHeading = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*! markdown-it-synapse-heading 1.0.1 https://github.com/jay-hodgson/markdown-it-synapse-heading @license MIT */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.markdownitSynapseHeading = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // Process '## headings'
 
 'use strict';
@@ -15,14 +15,13 @@ module.exports = function synapse_heading_plugin(md) {
   }
 
   function synapse_heading(state, startLine, endLine, silent) {
-    var token,
-        level,
-        tmp,
+    var ch, level, tmp, token,
         pos = state.bMarks[startLine] + state.tShift[startLine],
-        max = state.eMarks[startLine],
-        ch = state.src.charCodeAt(pos);
-    if (silent) { return true; }
-    if (ch !== 0x23/* # */) { return false; }
+        max = state.eMarks[startLine];
+
+    ch  = state.src.charCodeAt(pos);
+
+    if (ch !== 0x23/* # */ || pos >= max) { return false; }
 
     // count heading level
     level = 1;
@@ -31,9 +30,13 @@ module.exports = function synapse_heading_plugin(md) {
       level++;
       ch = state.src.charCodeAt(++pos);
     }
+
     if (level > 6) { return false; }
 
+    if (silent) { return true; }
+
     // Let's cut tails like '    ###  ' from the end of string
+
     max = state.skipSpacesBack(max, pos);
     tmp = state.skipCharsBack(max, 0x23, pos); // #
     if (tmp > pos && isSpace(state.src.charCodeAt(tmp - 1))) {
@@ -52,7 +55,6 @@ module.exports = function synapse_heading_plugin(md) {
       pos++;
     }
 
-
     token          = state.push('inline', '', 0);
     token.content  = state.src.slice(pos, max).trim();
     token.map      = [ startLine, state.line ];
@@ -63,8 +65,8 @@ module.exports = function synapse_heading_plugin(md) {
 
     return true;
   }
-
-  md.block.ruler.before('reference', 'synapse_heading', synapse_heading);
+  var rulesCanBeTerminated = [ 'paragraph', 'reference', 'blockquote' ];
+  md.block.ruler.after('fence', 'synapse_heading', synapse_heading, { alt: (rulesCanBeTerminated).slice() });
 };
 
 },{}]},{},[1])(1)
