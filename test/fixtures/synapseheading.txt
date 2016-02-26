@@ -25,15 +25,18 @@ a ### in a line does not indicate that it's a heading
 .
 
 .
-#### Heading 4
+####Heading 4
 .
 <h4 toc="true">Heading 4</h4>
 .
 
 .
-##### Heading 5
+_text above_
+####Heading 4
+
 .
-<h5 toc="true">Heading 5</h5>
+<p><em>text above</em></p>
+<h4 toc="true">Heading 4</h4>
 .
 
 .
