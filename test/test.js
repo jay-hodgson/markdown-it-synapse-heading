@@ -5,9 +5,9 @@ var generate = require('markdown-it-testgen');
 
 /*eslint-env mocha*/
 
-describe('markdown-it-centertext', function () {
+describe('markdown-it-synapse-heading', function () {
   var md = require('markdown-it')()
               .use(require('../'));
 
-  generate(path.join(__dirname, 'fixtures/centertext.txt'), md);
+  generate(path.join(__dirname, 'fixtures/synapseheading.txt'), md);
 });

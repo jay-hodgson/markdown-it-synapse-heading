@@ -1,39 +1,47 @@
 .
-s
+#Heading 1
+test
 .
-<p>s</p>
-.
-
-.
-some ->centered text<- in a paragraph
-.
-<p>some <div style="text-align: center;">centered text</div> in a paragraph</p>
+<h1 toc="true">Heading 1</h1>
+<p>test</p>
 .
 
 .
-bold and ->**centered text**<- in a paragraph
+a ### in a line does not indicate that it's a heading
 .
-<p>bold and <div style="text-align: center;"><strong>centered text</strong></div> in a paragraph</p>
-.
-
-.
-bold and **->centered text<-** in a paragraph
-.
-<p>bold and <strong><div style="text-align: center;">centered text</div></strong> in a paragraph</p>
-.
-
-
-.
-clearly not a ->centered text definition
-.
-<p>clearly not a -&gt;centered text definition</p>
+<p>a ### in a line does not indicate that it's a heading</p>
 .
 
 .
-more text that is not centered<-
+##**Heading 2**
 .
-<p>more text that is not centered&lt;-</p>
+<h2 toc="true"><strong>Heading 2</strong></h2>
 .
+
+.
+###Heading 3
+.
+<h3 toc="true">Heading 3</h3>
+.
+
+.
+#### Heading 4
+.
+<h4 toc="true">Heading 4</h4>
+.
+
+.
+##### Heading 5
+.
+<h5 toc="true">Heading 5</h5>
+.
+
+.
+###! Heading 3 no toc
+.
+<h3>Heading 3 no toc</h3>
+.
+
 
 coverage
 .
